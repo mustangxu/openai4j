@@ -3,6 +3,8 @@
  */
 package com.jayxu.openai4j;
 
+import java.time.Duration;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +56,9 @@ public interface OpenAiService {
                     new Gson()
                         .fromJson(resp.body().string(), ErrorResponse.class)
                         .getError());
-            }).build();
+            }).callTimeout(Duration.ofMinutes(1))
+            .connectTimeout(Duration.ofMinutes(1))
+            .readTimeout(Duration.ofMinutes(1)).build();
 
         return new Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(okhttp)

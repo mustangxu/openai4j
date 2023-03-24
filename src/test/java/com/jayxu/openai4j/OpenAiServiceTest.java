@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import com.jayxu.openai4j.model.ChatRequest;
 import com.jayxu.openai4j.model.Message;
+import com.jayxu.openai4j.model.Model;
 import com.jayxu.openai4j.model.ModelType;
 
 /**
@@ -40,6 +41,8 @@ class OpenAiServiceTest {
         assertNotNull(models);
 
         models.getData().stream().limit(3).forEach(System.out::println);
+        models.getData().stream().map(Model::getId).sorted()
+            .forEach(System.out::println);
     }
 
     @Test

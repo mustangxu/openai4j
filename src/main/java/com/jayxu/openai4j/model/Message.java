@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Message {
-    String role;
+    @Builder.Default
+    String role = "user";
     String content;
 }
