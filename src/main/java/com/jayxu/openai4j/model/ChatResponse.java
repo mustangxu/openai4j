@@ -11,7 +11,10 @@ import lombok.Data;
  * @author Jay Xu @2023
  */
 @Data
-public class ModelList {
+public class ChatResponse {
+    String id;
     String object;
-    List<Model> data;
+    Long created;
+    List<Choice> choices;
+    Usage usage;
 }

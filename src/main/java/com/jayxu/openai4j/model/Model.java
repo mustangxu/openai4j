@@ -9,13 +9,11 @@ import java.util.Map;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Data;
-import lombok.ToString;
 
 /**
  * @author Jay Xu @2023
  */
 @Data
-@ToString
 public class Model {
     String id;
     String object;

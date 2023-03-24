@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
+import com.jayxu.openai4j.model.ChatRequest;
+import com.jayxu.openai4j.model.ChatResponse;
 import com.jayxu.openai4j.model.ErrorResponse;
 import com.jayxu.openai4j.model.Model;
 import com.jayxu.openai4j.model.ModelList;
@@ -18,7 +20,9 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -70,4 +74,7 @@ public interface OpenAiService {
      */
     @GET("models/{model}")
     Call<Model> retrieveModel(@Path("model") String model);
+
+    @POST("chat/completions")
+    Call<ChatResponse> chat(@Body ChatRequest chat);
 }

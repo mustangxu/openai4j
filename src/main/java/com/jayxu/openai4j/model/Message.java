@@ -3,12 +3,15 @@
  */
 package com.jayxu.openai4j.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
  * @author Jay Xu @2023
  */
 @Data
-public class ErrorResponse {
-    Error error;
+@Builder
+public class Message {
+    String role;
+    String content;
 }
