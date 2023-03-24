@@ -75,6 +75,10 @@ public interface OpenAiService {
     @GET("models/{model}")
     Call<Model> retrieveModel(@Path("model") String model);
 
+    /**
+     * @see <a href=
+     *      "https://platform.openai.com/docs/api-reference/chat/create">https://platform.openai.com/docs/api-reference/chat/create</a>
+     */
     @POST("chat/completions")
     Call<ChatResponse> chat(@Body ChatRequest chat);
 }

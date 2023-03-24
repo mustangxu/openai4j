@@ -34,3 +34,4 @@ jobs:
         OSSRH_USERNAME: jayxu
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        OPENAI_APIKEY: ${{ secrets.OPENAI_APIKEY }}
