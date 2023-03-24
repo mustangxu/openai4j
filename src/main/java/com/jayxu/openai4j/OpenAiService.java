@@ -32,7 +32,7 @@ public interface OpenAiService {
     String BASE_URL = "https://api.openai.com/v1/";
     Logger log = LoggerFactory.getLogger(OpenAiService.class);
 
-    static OpenAiService init(String apiKey) {
+    static OpenAiService init(String apikey) {
         var interceptor = new HttpLoggingInterceptor(l -> {
             log.debug(l);
         });
@@ -41,7 +41,7 @@ public interface OpenAiService {
         var okhttp = new OkHttpClient.Builder().addInterceptor(interceptor)
             .addInterceptor(chain -> {
                 var newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + apiKey).build();
+                    .addHeader("Authorization", "Bearer " + apikey).build();
                 return chain.proceed(newRequest);
             }).addInterceptor(chain -> {
                 var resp = chain.proceed(chain.request());
