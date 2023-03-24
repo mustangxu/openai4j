@@ -58,13 +58,15 @@ public interface OpenAiService {
     }
 
     /**
-     * @see https://platform.openai.com/docs/api-reference/models/list
+     * @see <a href=
+     *      "https://platform.openai.com/docs/api-reference/models/list">https://platform.openai.com/docs/api-reference/models/list</a>
      */
     @GET("models")
     Call<ModelList> listModels();
 
     /**
-     * @see https://platform.openai.com/docs/api-reference/models/retrieve
+     * @see <a href=
+     *      "https://platform.openai.com/docs/api-reference/models/retrieve">https://platform.openai.com/docs/api-reference/models/retrieve</a>
      */
     @GET("models/{model}")
     Call<Model> retrieveModel(@Path("model") String model);
