@@ -12,7 +12,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.jayxu.openai4j.model.ChatRequest;
+import com.jayxu.openai4j.model.CompletionRequest;
 import com.jayxu.openai4j.model.Message;
 import com.jayxu.openai4j.model.Model;
 import com.jayxu.openai4j.model.ModelType;
@@ -58,11 +58,11 @@ class OpenAiServiceTest {
     @Test
     void testChat() throws Exception {
         var msg = Message.builder().role("user").content("写一首七绝").build();
-        var chat = ChatRequest.builder().messages(Arrays.asList(msg))
+        var chat = CompletionRequest.builder().messages(Arrays.asList(msg))
             .model(ModelType.GPT_35_TURBO.value()).build();
 
         System.out.println(chat);
-        var resp = service.chat(chat).execute().body();
+        var resp = service.createChat(chat).execute().body();
         assertNotNull(resp);
 
         System.out.println(resp);

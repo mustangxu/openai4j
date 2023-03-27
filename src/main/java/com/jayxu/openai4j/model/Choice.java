@@ -16,4 +16,6 @@ public class Choice {
     Message message;
     @SerializedName("finish_reason")
     String finishReason;
+    Integer logprobs;
+    String text;
 }

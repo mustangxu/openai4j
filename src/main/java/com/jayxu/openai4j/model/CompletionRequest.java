@@ -16,25 +16,32 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class ChatRequest {
+public class CompletionRequest {
     String model;
     List<Message> messages;
     @Builder.Default
-    double temperature = 1;
+    Double temperature = 1.;
     @SerializedName("top_p")
     @Builder.Default
-    double topP = 1;
+    Double topP = 1.;
     @Builder.Default
-    int n = 1;
-    boolean stream;
+    Integer n = 1;
+    Boolean stream;
     List<String> stop;
     @SerializedName("max_tokens")
     Integer maxTokens;
     @SerializedName("presence_penalty")
-    double presencePenalty;
+    Double presencePenalty;
     @SerializedName("frequency_penalty")
-    double frequencyPenalty;
+    Double frequencyPenalty;
     @SerializedName("logit_bias")
     Map<String, Integer> logitBias;
     String user;
+    String suffix;
+    Integer logprobs;
+    Boolean echo;
+    @SerializedName("best_of")
+    @Builder.Default
+    Integer bestOf = 1;
+    List<String> prompt;
 }

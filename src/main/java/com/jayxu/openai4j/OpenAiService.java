@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
-import com.jayxu.openai4j.model.ChatRequest;
-import com.jayxu.openai4j.model.ChatResponse;
+import com.jayxu.openai4j.model.CompletionRequest;
+import com.jayxu.openai4j.model.CompletionResponse;
 import com.jayxu.openai4j.model.ErrorResponse;
+import com.jayxu.openai4j.model.ImageRequest;
+import com.jayxu.openai4j.model.ImageResponse;
 import com.jayxu.openai4j.model.Model;
 import com.jayxu.openai4j.model.ModelList;
 import com.jayxu.openai4j.model.ServiceException;
@@ -38,7 +40,7 @@ public interface OpenAiService {
         var interceptor = new HttpLoggingInterceptor(l -> {
             log.debug(l);
         });
-        interceptor.setLevel(Level.HEADERS);
+        interceptor.setLevel(Level.BODY);
 
         var okhttp = new OkHttpClient.Builder().addInterceptor(interceptor)
             .addInterceptor(chain -> {
@@ -84,5 +86,19 @@ public interface OpenAiService {
      *      "https://platform.openai.com/docs/api-reference/chat/create">https://platform.openai.com/docs/api-reference/chat/create</a>
      */
     @POST("chat/completions")
-    Call<ChatResponse> chat(@Body ChatRequest chat);
+    Call<CompletionResponse> createChat(@Body CompletionRequest chat);
+
+    /**
+     * @see <a href=
+     *      "https://platform.openai.com/docs/api-reference/completions/create">https://platform.openai.com/docs/api-reference/completions/create</a>
+     */
+    @POST("completions")
+    Call<CompletionResponse> createCompletions(@Body CompletionRequest chat);
+
+    /**
+     * @see <a href=
+     *      "https://platform.openai.com/docs/api-reference/images/create">https://platform.openai.com/docs/api-reference/images/create</a>
+     */
+    @POST("images/generations")
+    Call<ImageResponse> createImage(@Body ImageRequest request);
 }
