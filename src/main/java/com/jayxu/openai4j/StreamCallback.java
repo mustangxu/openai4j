@@ -34,6 +34,7 @@ public class StreamCallback<T> implements Callback<ResponseBody> {
             Response<ResponseBody> response) {
         var scan = new Scanner(response.body().byteStream())
             .useDelimiter(DATA_PREFIX);
+        var gson = new Gson();
 
         while (scan.hasNext()) {
             try {
@@ -47,7 +48,7 @@ public class StreamCallback<T> implements Callback<ResponseBody> {
                     break;
                 }
 
-                var body = new Gson().fromJson(s, this.type);
+                var body = gson.fromJson(s, this.type);
 
                 this.sink.next(body);
             } catch (Exception ex) {
