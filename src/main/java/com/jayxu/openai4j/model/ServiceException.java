@@ -20,4 +20,8 @@ public class ServiceException extends RuntimeException {
     private static final long serialVersionUID = 5033966390062962803L;
     int status;
     com.jayxu.openai4j.model.Error error;
+
+    public ServiceException(Throwable cause) {
+        super(cause);
+    }
 }

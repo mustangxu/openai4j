@@ -19,6 +19,7 @@ import com.jayxu.openai4j.model.ModelList;
 import com.jayxu.openai4j.model.ServiceException;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Call;
@@ -28,6 +29,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
 
 /**
  * @author Jay Xu @2023
@@ -88,12 +90,20 @@ public interface OpenAiService {
     @POST("chat/completions")
     Call<CompletionResponse> createChat(@Body CompletionRequest chat);
 
+    @Streaming
+    @POST("chat/completions")
+    Call<ResponseBody> asyncCreateChat(@Body CompletionRequest chat);
+
     /**
      * @see <a href=
      *      "https://platform.openai.com/docs/api-reference/completions/create">https://platform.openai.com/docs/api-reference/completions/create</a>
      */
     @POST("completions")
     Call<CompletionResponse> createCompletions(@Body CompletionRequest chat);
+
+    @Streaming
+    @POST("completions")
+    Call<ResponseBody> asyncCreateCompletions(@Body CompletionRequest chat);
 
     /**
      * @see <a href=

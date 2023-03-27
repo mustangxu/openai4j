@@ -14,6 +14,7 @@ import lombok.Data;
 public class Choice {
     Integer index;
     Message message;
+    Message delta;
     @SerializedName("finish_reason")
     String finishReason;
     Integer logprobs;

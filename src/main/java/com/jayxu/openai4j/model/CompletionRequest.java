@@ -40,8 +40,6 @@ public class CompletionRequest {
     String suffix;
     Integer logprobs;
     Boolean echo;
-    @SerializedName("best_of")
-    @Builder.Default
-    Integer bestOf = 1;
+    Integer bestOf;
     List<String> prompt;
 }
