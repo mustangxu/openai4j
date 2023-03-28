@@ -19,13 +19,10 @@ import lombok.Data;
 public class CompletionRequest {
     String model;
     List<Message> messages;
-    @Builder.Default
-    Double temperature = 1.;
+    Double temperature;
     @SerializedName("top_p")
-    @Builder.Default
-    Double topP = 1.;
-    @Builder.Default
-    Integer n = 1;
+    Double topP;
+    Integer n;
     Boolean stream;
     List<String> stop;
     @SerializedName("max_tokens")
