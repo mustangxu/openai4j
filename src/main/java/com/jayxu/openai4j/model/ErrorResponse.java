@@ -10,5 +10,5 @@ import lombok.Data;
  */
 @Data
 public class ErrorResponse {
-    Error error;
+    ServiceError error;
 }
