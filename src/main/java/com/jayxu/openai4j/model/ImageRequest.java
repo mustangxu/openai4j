@@ -3,7 +3,7 @@
  */
 package com.jayxu.openai4j.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class ImageRequest {
     /**
      * <code>url</code> or <code>b64_json</code>
      */
-    @SerializedName("response_format")
+    @JsonProperty("response_format")
     @Builder.Default
     String responseFormat = "url";
     String user;

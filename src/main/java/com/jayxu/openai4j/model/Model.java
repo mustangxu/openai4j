@@ -6,7 +6,7 @@ package com.jayxu.openai4j.model;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class Model {
     String id;
     String object;
     Long created;
-    @SerializedName("owned_by")
+    @JsonProperty("owned_by")
     String ownedBy;
     List<Map<String, String>> permission;
     String root;

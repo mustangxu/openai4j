@@ -6,11 +6,11 @@ package com.jayxu.openai4j;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Arrays;
-
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import com.jayxu.openai4j.model.CompletionRequest;
 import com.jayxu.openai4j.model.Message;
@@ -20,6 +20,7 @@ import com.jayxu.openai4j.model.ModelType;
 /**
  * @author Jay Xu @2023
  */
+@Execution(ExecutionMode.CONCURRENT)
 class OpenAiServiceTest {
     private static OpenAiService service;
 
@@ -58,7 +59,7 @@ class OpenAiServiceTest {
     @Test
     void testChat() throws Exception {
         var msg = Message.builder().role("user").content("写一首七绝").build();
-        var chat = CompletionRequest.builder().messages(Arrays.asList(msg))
+        var chat = CompletionRequest.builder().message(msg)
             .model(ModelType.GPT_35_TURBO.value()).build();
 
         System.out.println(chat);
@@ -67,5 +68,18 @@ class OpenAiServiceTest {
 
         System.out.println(resp);
         System.out.println(resp.getChoices().get(0).getMessage());
+    }
+
+    @Test
+    void testCompletion() throws Exception {
+        var chat = CompletionRequest.builder().prompt("hello")
+            .model(ModelType.TEXT_DAVINCI_003.value()).build();
+
+        System.out.println(chat);
+        var resp = service.createCompletions(chat).execute().body();
+        assertNotNull(resp);
+
+        System.out.println(resp);
+        System.out.println(resp.getChoices().get(0).getText());
     }
 }

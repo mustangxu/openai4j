@@ -3,7 +3,7 @@
  */
 package com.jayxu.openai4j.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -15,7 +15,7 @@ public class Choice {
     Integer index;
     Message message;
     Message delta;
-    @SerializedName("finish_reason")
+    @JsonProperty("finish_reason")
     String finishReason;
     Integer logprobs;
     String text;

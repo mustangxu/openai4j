@@ -7,8 +7,8 @@ import java.time.Duration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import com.google.gson.Gson;
 import com.jayxu.openai4j.model.CompletionRequest;
 import com.jayxu.openai4j.model.CompletionResponse;
 import com.jayxu.openai4j.model.ErrorResponse;
@@ -23,7 +23,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -55,16 +55,16 @@ public interface OpenAiService {
                 }
 
                 throw new ServiceException(resp.code(),
-                    new Gson()
-                        .fromJson(resp.body().string(), ErrorResponse.class)
+                    Jackson2ObjectMapperBuilder.json().build()
+                        .readValue(resp.body().string(), ErrorResponse.class)
                         .getError());
             }).callTimeout(Duration.ofMinutes(1))
             .connectTimeout(Duration.ofMinutes(1))
             .readTimeout(Duration.ofMinutes(1)).build();
 
         return new Retrofit.Builder().baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).client(okhttp)
-            .build().create(OpenAiService.class);
+            .addConverterFactory(JacksonConverterFactory.create())
+            .client(okhttp).build().create(OpenAiService.class);
     }
 
     /**

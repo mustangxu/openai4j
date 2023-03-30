@@ -18,4 +18,5 @@ public class CompletionResponse extends BaseResponse {
     String object;
     List<Choice> choices;
     Usage usage;
+    String model;
 }

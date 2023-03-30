@@ -7,10 +7,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JacksonException;
 import com.jayxu.openai4j.model.CompletionRequest;
 import com.jayxu.openai4j.model.CompletionResponse;
 import com.jayxu.openai4j.model.ErrorResponse;
@@ -48,13 +49,18 @@ public class StreamOpenAiService {
 
     private <T> Flux<T> doRequest(String path, Object body,
             Class<T> responseType) {
-        var gson = new GsonBuilder().setLenient().create();
+        var jackson = Jackson2ObjectMapperBuilder.json().build();
 
         return this.client.post().uri(path)
             .contentType(MediaType.APPLICATION_JSON).bodyValue(body).retrieve()
             .bodyToFlux(SSE_TYPE).mapNotNull(ServerSentEvent::data)
-            .filter(e -> !EOF.equals(e))
-            .mapNotNull(e -> gson.fromJson(e, responseType));
+            .filter(e -> !EOF.equals(e)).mapNotNull(e -> {
+                try {
+                    return jackson.readValue(e, responseType);
+                } catch (JacksonException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
     }
 
     public StreamOpenAiService init() {

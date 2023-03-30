@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Builder;
 import lombok.Data;
@@ -25,19 +25,19 @@ public class CompletionRequest {
     @Singular
     List<Message> messages;
     Double temperature;
-    @SerializedName("top_p")
+    @JsonProperty("top_p")
     Double topP;
     Integer n;
     Boolean stream;
     @Singular("stop")
     List<String> stop;
-    @SerializedName("max_tokens")
+    @JsonProperty("max_tokens")
     Integer maxTokens;
-    @SerializedName("presence_penalty")
+    @JsonProperty("presence_penalty")
     Double presencePenalty;
-    @SerializedName("frequency_penalty")
+    @JsonProperty("frequency_penalty")
     Double frequencyPenalty;
-    @SerializedName("logit_bias")
+    @JsonProperty("logit_bias")
     @Singular
     Map<String, Integer> logitBias;
     String user;
@@ -45,6 +45,6 @@ public class CompletionRequest {
     Integer logprobs;
     Boolean echo;
     Integer bestOf;
-    @Singular("prompt")
+    @Singular(value = "prompt", ignoreNullCollections = true)
     List<String> prompt;
 }

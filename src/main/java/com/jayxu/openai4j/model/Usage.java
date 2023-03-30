@@ -3,7 +3,7 @@
  */
 package com.jayxu.openai4j.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -12,10 +12,10 @@ import lombok.Data;
  */
 @Data
 public class Usage {
-    @SerializedName("prompt_tokens")
+    @JsonProperty("prompt_tokens")
     Integer promptTokens;
-    @SerializedName("completion_tokens")
+    @JsonProperty("completion_tokens")
     Integer completionTokens;
-    @SerializedName("total_tokens")
+    @JsonProperty("total_tokens")
     Integer totalTokens;
 }
