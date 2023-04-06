@@ -37,10 +37,16 @@ public interface OpenAiService {
     Logger log = LoggerFactory.getLogger(OpenAiService.class);
 
     static OpenAiService init(String apikey) {
+        return init(apikey, Level.BODY, Duration.ofMinutes(1));
+    }
+
+    static OpenAiService init(String apikey, Level logLevel, Duration timeout) {
+        var json = Jackson2ObjectMapperBuilder.json().build();
+
         var interceptor = new HttpLoggingInterceptor(l -> {
             log.debug(l);
         });
-        interceptor.setLevel(Level.BODY);
+        interceptor.setLevel(logLevel);
 
         var okhttp = new OkHttpClient.Builder().addInterceptor(interceptor)
             .addInterceptor(chain -> {
@@ -55,12 +61,10 @@ public interface OpenAiService {
                 }
 
                 throw new ServiceException(resp.code(),
-                    Jackson2ObjectMapperBuilder.json().build()
-                        .readValue(resp.body().string(), ErrorResponse.class)
+                    json.readValue(resp.body().string(), ErrorResponse.class)
                         .getError());
-            }).callTimeout(Duration.ofMinutes(1))
-            .connectTimeout(Duration.ofMinutes(1))
-            .readTimeout(Duration.ofMinutes(1)).build();
+            }).callTimeout(timeout).connectTimeout(timeout).readTimeout(timeout)
+            .build();
 
         return new Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(JacksonConverterFactory.create())

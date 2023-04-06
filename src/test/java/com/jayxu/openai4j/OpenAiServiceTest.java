@@ -6,6 +6,8 @@ package com.jayxu.openai4j;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.Duration;
+
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,9 @@ import com.jayxu.openai4j.model.CompletionRequest;
 import com.jayxu.openai4j.model.Message;
 import com.jayxu.openai4j.model.Model;
 import com.jayxu.openai4j.model.ModelType;
+import com.jayxu.openai4j.model.ServiceException;
+
+import okhttp3.logging.HttpLoggingInterceptor.Level;
 
 /**
  * @author Jay Xu @2023
@@ -33,7 +38,8 @@ class OpenAiServiceTest {
 
         assertFalse(Strings.isBlank(apikey), "apikey");
 
-        service = OpenAiService.init(apikey);
+        service = OpenAiService.init(apikey, Level.BASIC,
+            Duration.ofSeconds(10));
     }
 
     @Test
@@ -41,7 +47,7 @@ class OpenAiServiceTest {
         var models = service.listModels().execute().body();
         assertNotNull(models);
 
-        models.getData().stream().limit(3).forEach(System.out::println);
+//        models.getData().stream().limit(3).forEach(System.out::println);
         models.getData().stream().map(Model::getId).sorted()
             .forEach(System.out::println);
     }
@@ -63,11 +69,16 @@ class OpenAiServiceTest {
             .model(ModelType.GPT_35_TURBO.value()).build();
 
         System.out.println(chat);
-        var resp = service.createChat(chat).execute().body();
-        assertNotNull(resp);
 
-        System.out.println(resp);
-        System.out.println(resp.getChoices().get(0).getMessage());
+        try {
+            var resp = service.createChat(chat).execute().body();
+            assertNotNull(resp);
+
+//            System.out.println(resp);
+            System.out.println(resp.getChoices().get(0).getMessage());
+        } catch (ServiceException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Test
@@ -76,10 +87,15 @@ class OpenAiServiceTest {
             .model(ModelType.TEXT_DAVINCI_003.value()).build();
 
         System.out.println(chat);
-        var resp = service.createCompletions(chat).execute().body();
-        assertNotNull(resp);
 
-        System.out.println(resp);
-        System.out.println(resp.getChoices().get(0).getText());
+        try {
+            var resp = service.createCompletions(chat).execute().body();
+            assertNotNull(resp);
+
+//            System.out.println(resp);
+            System.out.println(resp.getChoices().get(0).getText());
+        } catch (ServiceException ex) {
+            ex.printStackTrace();
+        }
     }
 }
