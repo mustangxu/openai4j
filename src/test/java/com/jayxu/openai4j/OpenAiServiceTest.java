@@ -18,7 +18,6 @@ import com.jayxu.openai4j.model.CompletionRequest;
 import com.jayxu.openai4j.model.Message;
 import com.jayxu.openai4j.model.Model;
 import com.jayxu.openai4j.model.ModelType;
-import com.jayxu.openai4j.model.ServiceException;
 
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 

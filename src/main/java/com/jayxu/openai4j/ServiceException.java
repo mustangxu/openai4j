@@ -1,9 +1,11 @@
 /**
  *
  */
-package com.jayxu.openai4j.model;
+package com.jayxu.openai4j;
 
 import java.io.Serial;
+
+import com.jayxu.openai4j.model.ServiceError;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +29,7 @@ public class ServiceException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return this.error == null ? null : this.error.message;
+        return this.error == null ? null : this.error.getMessage();
     }
 
 }

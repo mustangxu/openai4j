@@ -16,7 +16,7 @@ import com.jayxu.openai4j.model.ImageRequest;
 import com.jayxu.openai4j.model.ImageResponse;
 import com.jayxu.openai4j.model.Model;
 import com.jayxu.openai4j.model.ModelList;
-import com.jayxu.openai4j.model.ServiceException;
+import com.jayxu.openai4j.model.ServiceError;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -44,7 +44,7 @@ public interface OpenAiService {
         var json = Jackson2ObjectMapperBuilder.json().build();
 
         var interceptor = new HttpLoggingInterceptor(l -> {
-            log.debug(l);
+            log.trace(l);
         });
         interceptor.setLevel(logLevel);
 
@@ -60,9 +60,13 @@ public interface OpenAiService {
                     return resp;
                 }
 
-                throw new ServiceException(resp.code(),
-                    json.readValue(resp.body().string(), ErrorResponse.class)
-                        .getError());
+                // error
+                try (var body = resp.body();) {
+                    var error = body == null ? null
+                        : json.readValue(body.string(), ErrorResponse.class)
+                            .getError();
+                    throw new ServiceException(resp.code(), error);
+                }
             }).callTimeout(timeout).connectTimeout(timeout).readTimeout(timeout)
             .build();
 

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.jayxu.openai4j.model.CompletionRequest;
 import com.jayxu.openai4j.model.CompletionResponse;
 import com.jayxu.openai4j.model.ErrorResponse;
-import com.jayxu.openai4j.model.ServiceException;
 
 import lombok.Builder;
 import lombok.NonNull;
