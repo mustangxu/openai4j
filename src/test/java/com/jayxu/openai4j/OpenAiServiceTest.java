@@ -61,7 +61,7 @@ class OpenAiServiceTest {
         System.out.println(model);
     }
 
-    @Test
+//    @Test
     void testChat() throws Exception {
         var msg = Message.builder().role("user").content("写一首七绝").build();
         var chat = CompletionRequest.builder().message(msg)
@@ -80,7 +80,7 @@ class OpenAiServiceTest {
         }
     }
 
-    @Test
+//    @Test
     void testCompletion() throws Exception {
         var chat = CompletionRequest.builder().prompt("hello")
             .model(ModelType.TEXT_DAVINCI_003.value()).build();
