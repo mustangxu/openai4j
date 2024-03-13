@@ -35,5 +35,3 @@ jobs:
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         OPENAI_APIKEY: ${{ secrets.OPENAI_APIKEY }}
-        MAVEN_USERNAME: jayxu
-        MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
