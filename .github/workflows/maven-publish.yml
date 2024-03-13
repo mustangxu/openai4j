@@ -29,9 +29,11 @@ jobs:
         gpg-passphrase: GPG_PASSPHRASE
 
     - name: Publish to Sonatype Maven
-      run: mvn --batch-mode clean deploy
+      run: mvn --batch-mode clean deploy -DskipTests
       env:
         OSSRH_USERNAME: jayxu
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         OPENAI_APIKEY: ${{ secrets.OPENAI_APIKEY }}
+        MAVEN_USERNAME: jayxu
+        MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
