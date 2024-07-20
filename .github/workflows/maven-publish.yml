@@ -31,7 +31,7 @@ jobs:
     - name: Publish to Sonatype Maven
       run: mvn --batch-mode clean deploy -DskipTests
       env:
-        OSSRH_USERNAME: jayxu
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         OPENAI_APIKEY: ${{ secrets.OPENAI_APIKEY }}
