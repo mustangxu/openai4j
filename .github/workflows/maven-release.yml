@@ -16,11 +16,11 @@ jobs:
       packages: write
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+    - name: Set up JDK 25
+      uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '25'
         distribution: 'adopt'
         server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
         server-username: OSSRH_USERNAME
@@ -31,7 +31,7 @@ jobs:
     - name: Publish to Sonatype Maven
       run: mvn --batch-mode clean deploy -Prelease
       env:
-        OSSRH_USERNAME: jayxu
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         OPENAI_APIKEY: ${{ secrets.OPENAI_APIKEY }}
